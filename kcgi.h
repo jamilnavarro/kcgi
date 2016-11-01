@@ -515,6 +515,18 @@ enum kcgi_err	 khttp_fcgi_free(struct kfcgi *);
 void		 khttp_fcgi_child_free(struct kfcgi *);
 int		 khttp_fcgi_test(void);
 
+#define		KUTIL_EPOCH2TM(_tt, _tm) \
+		kutil_epoch2tmvals((_tt), \
+			&(_tm)->tt_sec, \
+			&(_tm)->tt_min, \
+			&(_tm)->tt_hour, \
+			&(_tm)->tt_mday, \
+			&(_tm)->tt_mon, \
+			&(_tm)->tt_year, \
+			&(_tm)->tt_wday, \
+			&(_tm)->tt_yday);
+void		 kutil_epoch2tmvals(int64_t, int *, int *, int *, 
+			int *, int *, int *, int *, int *);
 char		*kutil_epoch2str(int64_t, char *, size_t);
 int64_t	 	 kutil_date2epoch(int64_t, int64_t, int64_t);
 int64_t	 	 kutil_datetime2epoch(int64_t, int64_t, int64_t,
@@ -530,9 +542,15 @@ char		*kutil_urlencode(const char *);
 void		 kutil_invalidate(struct kreq *, struct kpair *);
 
 int		 kutil_openlog(const char *);
+void		 kutil_vinfo(const struct kreq *, 
+			const char *, const char *, va_list);
 void		 kutil_vlog(const struct kreq *, const char *,
 			const char *, const char *, va_list);
 void		 kutil_vlogx(const struct kreq *, const char *,
+			const char *, const char *, va_list);
+void		 kutil_vwarn(const struct kreq *, 
+			const char *, const char *, va_list);
+void		 kutil_vwarnx(const struct kreq *, 
 			const char *, const char *, va_list);
 void		 kutil_log(const struct kreq *, const char *,
 			const char *, const char *, ...)
